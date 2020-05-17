@@ -38,6 +38,7 @@ class CreateCampaingsTable extends Migration
             $table->string('text_ad');
             $table->boolean('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

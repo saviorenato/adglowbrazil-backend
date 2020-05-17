@@ -15,7 +15,15 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->enum('type_business',['Administrator','Coordinator']);
             $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role_id')->nullable()->after('parent_id');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 
