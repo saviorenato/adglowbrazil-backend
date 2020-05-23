@@ -22,7 +22,7 @@ class CreateRolesTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role_id')->nullable()->after('parent_id');
+            $table->unsignedBigInteger('role_id')->nullable()->after('parent_id');
             $table->foreign('role_id')->references('id')->on('roles');
         });
     }

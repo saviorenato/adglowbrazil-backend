@@ -33,7 +33,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li><a href="{{ route('users.index') }}">Usuários</a></li>
+                        <li><a href="{{ route('user.index') }}">Usuários</a></li>
+                        <li><a href="{{ route('role.index') }}">Papeis</a></li>
+                        <li><a href="{{ route('shop.index') }}">Lojas</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
