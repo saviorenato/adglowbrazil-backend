@@ -30,7 +30,8 @@
                             {!! Form::open(
                                 [
                                     'method'=>'DELETE',
-                                    'url' => action('ShopController@destroy',[$shop->id])
+                                    'url' => action('ShopController@destroy',[$shop->id]),
+                                    'style' => "display: inline;"
                                 ]
                                 ) !!}
                                 <a onclick="javascript:$(this).closest('form').submit()" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Excluir</a>

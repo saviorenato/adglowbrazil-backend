@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ShopController extends Controller
 {
@@ -14,7 +15,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-        //
+        $shops = Shop::all();
+        return view('shop.index', compact('shops'));
     }
 
     /**
@@ -24,7 +26,7 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //
+        return view('shop.create');
     }
 
     /**
@@ -35,7 +37,23 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'code' => 'required|max:255',
+            'type' => 'required|max:255',
+        ]);
+
+        $shop = new Shop();
+        $shop->code  = $request->get('code');
+        $shop->name  = $request->get('name');
+        $shop->name_normalized   = Str::slug($request->get('name'));
+        $shop->status    = 'active';
+        $shop->type  = $request->get('type');
+        $shop->attributes    = [];
+        $shop->enabled   = 1;
+        $shop->save();
+        $request->session()->flash('message','Loja criada com sucesso');
+        return redirect()->route('shop.index');
     }
 
     /**
@@ -46,7 +64,7 @@ class ShopController extends Controller
      */
     public function show(Shop $shop)
     {
-        //
+        return view('shop.show', compact('shop'));
     }
 
     /**
@@ -57,7 +75,7 @@ class ShopController extends Controller
      */
     public function edit(Shop $shop)
     {
-        //
+        return view('shop.edit', compact('shop'));
     }
 
     /**
@@ -69,7 +87,23 @@ class ShopController extends Controller
      */
     public function update(Request $request, Shop $shop)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'code' => 'required|max:255',
+            'type' => 'required|max:255',
+        ]);
+
+        $shop->code  = $request->get('code');
+        $shop->name  = $request->get('name');
+        $shop->name_normalized   = Str::slug($request->get('name'));
+        $shop->status    = 'active';
+        $shop->type  = $request->get('type');
+        $shop->attributes    = [];
+        $shop->enabled   = 1;
+        $shop->update();
+
+        return redirect()->route('shop.index');
+
     }
 
     /**
@@ -80,6 +114,8 @@ class ShopController extends Controller
      */
     public function destroy(Shop $shop)
     {
-        //
+        $shop->delete();
+        session()->flash('message','Loja excluída com sucesso');
+        return redirect()->route('shop.index');
     }
 }

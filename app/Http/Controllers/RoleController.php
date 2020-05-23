@@ -39,10 +39,9 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|max:255',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('_token');
         Role::create($data);
         $request->session()->flash('message','Papel criado com sucesso');
         return redirect()->route('role.index');

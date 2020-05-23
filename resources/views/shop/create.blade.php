@@ -15,8 +15,8 @@
         @endif
 
 
-        {!! Form::open(['route'=>'role.store']) !!}
-        @include('role._form')
+        {!! Form::open(['route'=>'shop.store']) !!}
+        @include('shop._form')
         {!! Form::close() !!}
 
         @error('title')

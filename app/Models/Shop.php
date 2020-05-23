@@ -9,4 +9,7 @@ class Shop extends Model
     protected $casts = [
         'attributes' => 'array'
     ];
+    protected $fillable = [
+        'name'
+    ];
 }
