@@ -12,12 +12,14 @@
         <table class="table table-bordered">
             <thead>
                 <th>Nome</th>
+                <th>Tipo</th>
                 <th>Ação</th>
             </thead>
             <tbody>
             @foreach($roles as $role)
                 <tr>
                     <td>{{$role->name}}</td>
+                    <td>{{$role->type_business}}</td>
                     <td>
 {{--                        @can('role_edit')--}}
                             <a href="{{ route('role.edit',[$role->id]) }}" class="btn btn-default">

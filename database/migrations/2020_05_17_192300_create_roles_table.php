@@ -25,6 +25,37 @@ class CreateRolesTable extends Migration
             $table->unsignedBigInteger('role_id')->nullable()->after('parent_id');
             $table->foreign('role_id')->references('id')->on('roles');
         });
+
+        \App\Models\Role::create(
+            [
+                'name' => 'National Manager',
+                'type_business' => 'Administrator',
+            ]
+        );
+        \App\Models\Role::create(
+            [
+                'name' => 'Regional Manager',
+                'type_business' => 'Administrator',
+            ]
+        );
+        \App\Models\Role::create(
+            [
+                'name' => 'Marketing Assistant',
+                'type_business' => 'Coordinator',
+            ]
+        );
+        \App\Models\Role::create(
+            [
+                'name' => 'Franchisee Coordinator',
+                'type_business' => 'Coordinator',
+            ]
+        );
+        \App\Models\Role::create(
+            [
+                'name' => 'Shop',
+                'type_business' => 'Coordinator',
+            ]
+        );
     }
 
     /**
@@ -34,6 +65,10 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['role_id']);
+        });
+
         Schema::dropIfExists('roles');
     }
 }
