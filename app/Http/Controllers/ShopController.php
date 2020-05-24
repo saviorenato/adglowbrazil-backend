@@ -47,10 +47,19 @@ class ShopController extends Controller
         $shop->code  = $request->get('code');
         $shop->name  = $request->get('name');
         $shop->name_normalized   = Str::slug($request->get('name'));
-        $shop->status    = 'active';
         $shop->type  = $request->get('type');
-        $shop->attributes    = [];
-        $shop->enabled   = 1;
+
+        $shop->owner = $request->get('owner');
+        $shop->gerencia_de_mercado = $request->get('gerencia_de_mercado');
+        $shop->consultor = $request->get('consultor');
+        $shop->gerente_mkt = $request->get('gerente_mkt');
+        $shop->coordenador_mkt = $request->get('coordenador_mkt');
+        $shop->asistente_mkt = $request->get('asistente_mkt');
+        $shop->quadrante_de_performance = $request->get('quadrante_de_performance');
+        $shop->latitud = $request->get('latitud');
+        $shop->longitud = $request->get('longitud');
+        $shop->status    = $request->get('status');
+        $shop->enabled   = $request->get('enabled');
         $shop->save();
         $request->session()->flash('message','Loja criada com sucesso');
         return redirect()->route('shop.index');
@@ -96,10 +105,19 @@ class ShopController extends Controller
         $shop->code  = $request->get('code');
         $shop->name  = $request->get('name');
         $shop->name_normalized   = Str::slug($request->get('name'));
-        $shop->status    = 'active';
+
         $shop->type  = $request->get('type');
-        $shop->attributes    = [];
-        $shop->enabled   = 1;
+        $shop->owner = $request->get('owner');
+        $shop->gerencia_de_mercado = $request->get('gerencia_de_mercado');
+        $shop->consultor = $request->get('consultor');
+        $shop->gerente_mkt = $request->get('gerente_mkt');
+        $shop->coordenador_mkt = $request->get('coordenador_mkt');
+        $shop->asistente_mkt = $request->get('asistente_mkt');
+        $shop->quadrante_de_performance = $request->get('quadrante_de_performance');
+        $shop->latitud = $request->get('latitud');
+        $shop->longitud = $request->get('longitud');
+        $shop->status    = $request->get('status');
+        $shop->enabled   = $request->get('enabled');
         $shop->update();
 
         return redirect()->route('shop.index');
@@ -114,8 +132,12 @@ class ShopController extends Controller
      */
     public function destroy(Shop $shop)
     {
-        $shop->delete();
-        session()->flash('message','Loja excluída com sucesso');
+        try {
+            $shop->delete();
+            session()->flash('message','Loja excluída com sucesso');
+        }catch (\Exception $exception){
+            session()->flash('error','Esta Loja não pode ser excluida');
+        }
         return redirect()->route('shop.index');
     }
 }

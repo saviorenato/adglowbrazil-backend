@@ -15,12 +15,23 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->string('code')->unique();
             $table->string('name');
             $table->string('name_normalized');
             $table->string('status');
             $table->string('type');
-            $table->json('attributes');
+//            $table->json('attributes');
+
+            $table->string('owner')->nullable();
+            $table->string('gerencia_de_mercado')->nullable();
+            $table->string('consultor')->nullable();
+            $table->string('gerente_mkt')->nullable();
+            $table->string('coordenador_mkt')->nullable();
+            $table->string('asistente_mkt')->nullable();
+            $table->string('quadrante_de_performance')->nullable();
+            $table->string('latitud')->nullable();
+            $table->string('longitud')->nullable();
+
             $table->boolean('enabled');
             $table->timestamps();
             $table->softDeletes();
@@ -30,7 +41,6 @@ class CreateShopsTable extends Migration
         Schema::create('shop_user', function (Blueprint $table) {
             $table->unsignedBigInteger('shop_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamps();
 
             $table->foreign('shop_id')->references('id')->on('shops');
             $table->foreign('user_id')->references('id')->on('users');

@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\User','parent_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function shops()
+    {
+        return $this->belongsToMany('App\Models\Shop');
+    }
 }

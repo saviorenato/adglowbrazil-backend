@@ -1,11 +1,11 @@
 <div class="form-group">
-    {!! Form::label('parent_id', 'Superior:') !!}
+    {!! Form::label('parent_id', 'Parent:') !!}
     {!! Form::select('parent_id', $users, isset($user)?$user->parent_id:null, ['placeholder' => 'Selecione...','class'=>'form-control']) !!}
 </div>
 
 
 <div class="form-group">
-    {!! Form::label('role_id', 'Tipo:') !!}
+    {!! Form::label('role_id', 'Type:') !!}
     {!! Form::select('role_id', $roles, isset($user)?$user->role_id:null , ['placeholder' => 'Selecione...','class'=>'form-control']) !!}
 </div>
 
@@ -23,5 +23,12 @@
     {!! Form::label('password', 'Senha:') !!}
     {!! Form::password('password', ['class'=>'form-control']) !!}
 </div>
+
+<div class="form-group">
+    {!! Form::label('shops', 'Lojas:') !!}
+    {!! Form::select('shops[]', $shops, null, ['class'=>'form-control multi-select    ','multiple'=>'multiple']) !!}
+</div>
+
+
 
 {!! Form::submit('Salvar', ['class'=>'btn btn-primary']) !!}

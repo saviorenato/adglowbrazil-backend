@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -18,7 +19,8 @@ class UserController extends Controller
     {
         $roles = Role::all()->pluck('name','id');
         $users = User::all()->pluck('name','id');
-        return view('user.create', compact('roles','users'));
+        $shops = Shop::all()->pluck('code','id');
+        return view('user.create', compact('roles','users', 'shops'));
     }
 
     public function store(Request $request)
@@ -26,6 +28,10 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|max:255',
+            'password' => 'required|max:255',
+            'role_id' => 'required'
+        ],[
+            'role_id.required' => 'Select the type field'
         ]);
 
         $role = Role::find($request->get('role_id'));
@@ -38,6 +44,8 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->sup()->associate($sup);
         $user->save();
+
+        $user->shops()->sync($request->get('shops'));
         $request->session()->flash('message','Usuário criado com sucesso');
         return redirect()->route('user.index');
     }
@@ -51,7 +59,8 @@ class UserController extends Controller
     {
         $roles = Role::all()->pluck('name','id');
         $users = User::all()->pluck('name','id');
-        return view('user.edit', compact(['user','roles','users']));
+        $shops = Shop::all()->pluck('code','id');
+        return view('user.edit', compact(['user','roles','users','shops']));
     }
 
     public function update(User $user, Request $request)
@@ -59,19 +68,31 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|max:255',
+            'role_id' => 'required'
+        ],[
+            'role_id.required' => 'Select the type field'
         ]);
 
-        $data = $request->all();
-        $data['password'] = \Hash::make($data['password']);
-        $user->update($data);
+        if($request->filled('password')){
+            $user->password = \Hash::make($request->get('password'));
+        }
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+
+        $user->update();
+        $user->shops()->sync($request->get('shops'));
         session()->flash('message','Usuário editado com sucesso');
         return redirect()->route('user.index');
     }
 
     public function destroy(User $user)
     {
-        $user->delete();
-        session()->flash('message','Usuário excluído com sucesso');
+        try {
+            $user->delete();
+            session()->flash('message','Usuário excluído com sucesso');
+        }catch (\Exception $exception){
+            session()->flash('error','Este usuário não pode ser excluído');
+        }
         return redirect()->route('user.index');
     }
 }

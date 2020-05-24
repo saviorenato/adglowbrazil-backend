@@ -97,8 +97,13 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete();
-        session()->flash('message','Papel excluído com sucesso');
+        try {
+            $role->delete();
+            session()->flash('message','Papel excluído com sucesso');
+        }catch (\Exception $exception){
+            session()->flash('error','Este papel não pode ser excluído');
+        }
+
         return redirect()->route('role.index');
     }
 }

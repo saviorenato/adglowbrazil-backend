@@ -12,12 +12,22 @@
         <table class="table table-bordered">
             <thead>
                 <th>Nome</th>
-                <th>Ação</th>
+                <th>Code</th>
+                <th>Tipo</th>
+                <th>Owner</th>
+                <th>Status</th>
+                <th>Enabled</th>
+                <th>Action</th>
             </thead>
             <tbody>
             @foreach($shops as $shop)
                 <tr>
                     <td>{{$shop->name}}</td>
+                    <td>{{$shop->code}}</td>
+                    <td>{{$shop->type}}</td>
+                    <td>{{$shop->owner}}</td>
+                    <td>{{$shop->status}}</td>
+                    <td>{{($shop->enabled)?'Yes':'No'}}</td>
                     <td>
 {{--                        @can('shop_edit')--}}
                             <a href="{{ route('shop.edit',[$shop->id]) }}" class="btn btn-default">

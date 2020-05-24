@@ -75,6 +75,20 @@
         </nav>
 
         <main class="py-4">
+
+            @if(Session::has('message'))
+                <div class="container hidden-print" style="">
+                    {!! Session::get('message') !!}
+                </div>
+            @endif
+
+            @if(Session::has('error'))
+                <div class="container hidden-print" style="">
+                    {!! Session::get('error') !!}
+                </div>
+            @endif
+
+
             @yield('content')
         </main>
     </div>
