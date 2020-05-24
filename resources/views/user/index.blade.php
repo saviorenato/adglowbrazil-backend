@@ -13,6 +13,8 @@
             <thead>
                 <th>Nome</th>
                 <th>Email</th>
+                <th>Papel</th>
+                <th>Superior</th>
                 <th>Ação</th>
             </thead>
             <tbody>
@@ -20,6 +22,8 @@
                 <tr>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
+                    <td>{{ $user->role['name'] }}</td>
+                    <td>{{ $user->sup['name'] }}</td>
                     <td>
 {{--                        @can('user_edit')--}}
                             <a href="{{ route('user.edit',[$user->id]) }}" class="btn btn-default">

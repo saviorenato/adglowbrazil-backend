@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -9,13 +10,15 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::with('sup','role')->get();
         return view('user.index', compact('users'));
     }
 
     public function create()
     {
-        return view('user.create');
+        $roles = Role::all()->pluck('name','id');
+        $users = User::all()->pluck('name','id');
+        return view('user.create', compact('roles','users'));
     }
 
     public function store(Request $request)
@@ -25,9 +28,16 @@ class UserController extends Controller
             'email' => 'required|max:255',
         ]);
 
-        $data = $request->all();
-        $data['password'] = \Hash::make($data['password']);
-        User::create($data);
+        $role = Role::find($request->get('role_id'));
+        $sup = User::find($request->get('parent_id'));
+
+        $user = new User();
+        $user->password = \Hash::make($request->get('password'));
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->role()->associate($role);
+        $user->sup()->associate($sup);
+        $user->save();
         $request->session()->flash('message','Usuário criado com sucesso');
         return redirect()->route('user.index');
     }
@@ -39,7 +49,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('user.edit', compact('user'));
+        $roles = Role::all()->pluck('name','id');
+        $users = User::all()->pluck('name','id');
+        return view('user.edit', compact(['user','roles','users']));
     }
 
     public function update(User $user, Request $request)
