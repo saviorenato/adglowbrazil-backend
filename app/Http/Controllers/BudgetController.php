@@ -7,79 +7,36 @@ use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    //GET /budget
+    public function index() {
+        $budget = Budget::all();
+        return $budget;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    //GET /budget/create
+    public function create(Request $request){
+        $create = Budget::create($request->all());
+        return $create;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    //GET /budget/{id}
+    public function show($id) 
     {
-        //
+        $budget = Budget::findOrFail($id);
+        return $budget;
+    }
+    
+    //PUT /budget/{id}
+    public function update(Request $request, $id){
+        $budget = Budget::findOrFail($id);
+        $budget->update($request->all());
+        return response()->json($budget, 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Budget $budget)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Budget $budget)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Budget $budget)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Budget $budget)
-    {
-        //
+    //DELETE /budget/{id}
+    public function destroy($id){
+        $budget = Budget::findOrFail($id);
+        $budget->delete();
+        return response()->json(null, 204);        
     }
 }

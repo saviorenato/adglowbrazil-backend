@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBudgetsTable extends Migration
+class CreateCampaingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBudgetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('budgets', function (Blueprint $table) {
+        Schema::create('campaings', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->integer('id_shop')->nullable();
             $table->integer('id_master_campaing')->nullable();
             $table->decimal('budget_value')->nullable();
-            $table->dateTime('schedule_begin_date')->nullable();
             $table->boolean('enabled')->nullable();
             $table->timestamps();
         });
@@ -31,6 +30,6 @@ class CreateBudgetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('budgets');
+        Schema::dropIfExists('campaings');
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MasterCampaing extends Model
 {
-
     protected $fillable = [
         'id',
         'login_id',
@@ -31,5 +30,4 @@ class MasterCampaing extends Model
         'text_ad',
         'status'
     ];
-
 }

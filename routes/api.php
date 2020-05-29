@@ -8,3 +8,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('mastercampaing', 'MasterCampaingController');
+Route::resource('campaing', 'CampaingController');
+Route::resource('budget', 'BudgetController');
+Route::resource('consumebudget', 'ConsumedBudgetController');
